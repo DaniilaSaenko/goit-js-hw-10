@@ -4,12 +4,13 @@ import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
-const refs = {
-  input: document.querySelector('#search-box'),
-  countryList: document.querySelector('.country-list'),
-  countryInfo: document.querySelector('.country-info'),
-};
-refs.input.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
+
+
+const input = document.querySelector('#search-box');
+const countriesList = document.querySelector('.country-list');
+const countryInfo = document.querySelector('.country-info');
+
+input.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch(e) {
   e.preventDefault();
@@ -24,11 +25,9 @@ function onSearch(e) {
   fetchCountries(inputValue)
     .then(country => {
       if (country.length > 10) {
-        return Notiflix.Notify.info(
-          'Too many matches found. Please enter a more specific name.'
-        );
+        return Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
       }
-      if (country.length >= 2 && country.length <= 10) {
+      if (country.length > 1 && country.length <= 10) {
         return arrayOfCountries(country);
       }
       if (country.length === 1) {
@@ -36,9 +35,7 @@ function onSearch(e) {
       }
     })
     .catch(error => {
-      return Notiflix.Notify.failure(
-        'Oops, there is no country with that name'
-      );
+      return Notiflix.Notify.failure('Oops, there is no country with that name');
     });
 }
 
@@ -52,16 +49,16 @@ function arrayOfCountries(country) {
             class="country-img"
             width="40"
             >
-            
-            <p class="country-list-text">${name.common}</p>
+            <p class="country-list-text">${name.official}</p>
         </li>`
     )
     .join('');
-  refs.countryList.innerHTML = arraOfCountries;
+  countriesList.innerHTML = arraOfCountries;
 }
+
+
 function cardOfCountry(country) {
-  const card = country
-    .map(
+  const card = country.map(
       ({ flags, name, capital, population, languages }) =>
         `
       <h2 class="info-name">
@@ -78,10 +75,10 @@ function cardOfCountry(country) {
         `
     )
     .join('');
-  refs.countryInfo.innerHTML = card;
+  countryInfo.innerHTML = card;
 }
 
 function clearInfo() {
-  refs.countryInfo.innerHTML = '';
-  refs.countryList.innerHTML = '';
+  countryInfo.innerHTML = '';
+  countriesList.innerHTML = '';
 }
