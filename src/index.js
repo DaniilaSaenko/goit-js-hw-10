@@ -14,10 +14,9 @@ input.addEventListener('input', debounce(onSearch, DEBOUNCE_DELAY));
 
 function onSearch(e) {
   e.preventDefault();
+
   const inputValue = e.target.value.trim();
-
-  clearInfo();
-
+   clearInfo(); 
   if (inputValue === '') {
     return;
   }
