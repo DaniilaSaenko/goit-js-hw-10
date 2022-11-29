@@ -13,6 +13,7 @@ git status
 branch is up to date with 'origin/main'.
 
 git remote -v https://github.com/DaniilaSaenko/goit-js-hw-09.git (fetch) origin
+
 https://github.com/DaniilaSaenko/goit-js-hw-09.git (push)
 
 git add .
