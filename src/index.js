@@ -1,10 +1,9 @@
 import './css/styles.css';
-import  fetchCountries from './js/fetchCountries';
+import fetchCountries from './js/fetchCountries';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
 const DEBOUNCE_DELAY = 300;
-
 
 const input = document.querySelector('#search-box');
 const countriesList = document.querySelector('.country-list');
@@ -16,26 +15,31 @@ function onSearch(e) {
   e.preventDefault();
 
   const inputValue = e.target.value.trim();
-   clearInfo(); 
+  clearInfo();
   if (inputValue === '') {
     return;
   }
 
   fetchCountries(inputValue)
-    .then(country => {
-      if (country.length > 10) {
-        return Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-      }
-      if (country.length > 1 && country.length <= 10) {
-        return arrayOfCountries(country);
-      }
-      if (country.length === 1) {
-        return cardOfCountry(country);
-      }
-    })
-    .catch(error => {
-      return Notiflix.Notify.failure('Oops, there is no country with that name');
-    });
+    .then(countriesListCreate)
+    .catch(countriesListError);
+}
+
+function countriesListCreate(country) {
+  const countryLength = country.length;
+  if (countryLength > 10) {
+    return Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
+  }
+  if (countryLength > 1 && countryLength <= 10) {
+    return arrayOfCountries(country);
+  }
+  if (countryLength === 1) {
+    return cardOfCountry(country);
+  }
+}
+
+function countriesListError(error) {
+  return Notiflix.Notify.failure('Oops, there is no country with that name');
 }
 
 function arrayOfCountries(country) {
@@ -46,8 +50,7 @@ function arrayOfCountries(country) {
             <img  src="${flags.svg}" 
             alt="${name.official}" 
             class="country-img"
-            width="40"
-            >
+            width="40">
             <p class="country-list-text">${name.official}</p>
         </li>`
     )
@@ -55,17 +58,16 @@ function arrayOfCountries(country) {
   countriesList.innerHTML = arraOfCountries;
 }
 
-
 function cardOfCountry(country) {
-  const card = country.map(
+  const card = country
+    .map(
       ({ flags, name, capital, population, languages }) =>
         `
       <h2 class="info-name">
         <img class="info-img" 
         src="${flags.svg}" 
         alt=" ${name.common}"
-        width="70"
-        >
+        width="70">
         ${name.common}
       </h2>
       <p class="info-capital"><b>Capital: </b>${capital}</p>
