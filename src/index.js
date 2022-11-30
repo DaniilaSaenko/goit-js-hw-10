@@ -16,9 +16,9 @@ function onSearch(e) {
 
   const inputValue = e.target.value.trim();
   clearInfo();
-  if (inputValue === '') {
-    return;
-  }
+     if (inputValue === '') {
+      return;
+    }
 
   fetchCountries(inputValue)
     .then(countriesListCreate)
@@ -50,7 +50,7 @@ function arrayOfCountries(country) {
             <img  src="${flags.svg}" 
             alt="${name.official}" 
             class="country-img"
-            width="40">
+            width="60" >
             <p class="country-list-text">${name.official}</p>
         </li>`
     )
@@ -67,7 +67,7 @@ function cardOfCountry(country) {
         <img class="info-img" 
         src="${flags.svg}" 
         alt=" ${name.common}"
-        width="70">
+        width="100">
         ${name.common}
       </h2>
       <p class="info-capital"><b>Capital: </b>${capital}</p>
