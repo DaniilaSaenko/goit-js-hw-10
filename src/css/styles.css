@@ -11,7 +11,9 @@ body {
   color: #212121;
   line-height: 1.5;
 }
-
+ p{
+  font-size: 20px;
+ }
 #search-box {
   font: inherit;
   padding: 8px;
@@ -30,7 +32,7 @@ body {
 }
 .country-list-text {
   font-weight: bold;
-  font-size: 20px;
+
 }
 .country-img {
   margin-right: 10px;
