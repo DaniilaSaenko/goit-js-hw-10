@@ -36,6 +36,7 @@ function countriesListCreate(country) {
   if (countryLength === 1) {
     return cardOfCountry(country);
   }
+  
 }
 
 function countriesListError(error) {
